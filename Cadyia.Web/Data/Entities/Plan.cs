@@ -17,7 +17,7 @@ namespace Cadyia.Data.Entities
         public DateTime? LastUpdateDate { get; set; }
         public DateTime? ShowDate { get; set; }
         public int View { get; set; }
-        public int? DefaultImageID { get; set; }
+        public int? ImageId { get; set; }
         public bool Free { get; set; }
         public bool PresentOnly { get; set; }
         public bool? Approve { get; set; }
