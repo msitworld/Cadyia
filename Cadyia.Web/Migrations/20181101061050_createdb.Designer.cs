@@ -4,14 +4,16 @@ using Cadyia.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cadyia.Web.Migrations
 {
     [DbContext(typeof(CadyiaDbContext))]
-    partial class CadyiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181101061050_createdb")]
+    partial class createdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,11 +35,7 @@ namespace Cadyia.Web.Migrations
 
                     b.Property<int?>("DefaultImageID");
 
-                    b.Property<string>("Description");
-
-                    b.Property<bool>("Free")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("1");
+                    b.Property<bool>("Free");
 
                     b.Property<DateTime?>("LastUpdateDate");
 
@@ -53,13 +51,9 @@ namespace Cadyia.Web.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValueSql("GETDATE()");
 
-                    b.Property<string>("Title");
-
                     b.Property<string>("UserId");
 
-                    b.Property<int>("View")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("0");
+                    b.Property<int>("View");
 
                     b.HasKey("PlanId");
 

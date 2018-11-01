@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cadyia.Web.Migrations
 {
     [DbContext(typeof(CadyiaDbContext))]
-    [Migration("20181031133408_createdb")]
-    partial class createdb
+    [Migration("20181101070712_addtwofielddefault")]
+    partial class addtwofielddefault
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,11 @@ namespace Cadyia.Web.Migrations
 
                     b.Property<int?>("DefaultImageID");
 
-                    b.Property<bool>("Free");
+                    b.Property<string>("Description");
+
+                    b.Property<bool>("Free")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("1");
 
                     b.Property<DateTime?>("LastUpdateDate");
 
@@ -48,11 +52,16 @@ namespace Cadyia.Web.Migrations
                     b.Property<DateTime?>("ShowDate");
 
                     b.Property<DateTime>("SubmitDate")
-                        .ValueGeneratedOnAddOrUpdate();
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<string>("Title");
 
                     b.Property<string>("UserId");
 
-                    b.Property<int>("View");
+                    b.Property<int>("View")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("0");
 
                     b.HasKey("PlanId");
 

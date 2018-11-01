@@ -16,5 +16,25 @@ namespace Cadyia.Web.Data
 
         public DbSet<Plan> Plans { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Plan>()
+                .Property(c => c.SubmitDate)
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("GETDATE()");
+
+            modelBuilder.Entity<Plan>()
+                .Property(c => c.Free)
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("1");
+
+            modelBuilder.Entity<Plan>()
+                .Property(c => c.View)
+                .ValueGeneratedOnAdd()
+                .HasDefaultValueSql("0");
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

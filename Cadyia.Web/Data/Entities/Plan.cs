@@ -11,6 +11,8 @@ namespace Cadyia.Data.Entities
         public string UserId { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime SubmitDate { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public DateTime? ApproveDate { get; set; }
         public DateTime? LastUpdateDate { get; set; }
         public DateTime? ShowDate { get; set; }

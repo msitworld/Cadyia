@@ -10,6 +10,7 @@ namespace Cadyia.Web.Contracts
     {
         IEnumerable<T> FindAll();
         IEnumerable<T> FindByCondition(Expression<Func<T, bool>> expression);
+        T FindById(int id);
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);

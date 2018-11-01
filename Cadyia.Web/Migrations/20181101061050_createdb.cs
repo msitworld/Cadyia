@@ -54,7 +54,7 @@ namespace Cadyia.Web.Migrations
                     PlanId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: true),
-                    SubmitDate = table.Column<DateTime>(nullable: false),
+                    SubmitDate = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()"),
                     ApproveDate = table.Column<DateTime>(nullable: true),
                     LastUpdateDate = table.Column<DateTime>(nullable: true),
                     ShowDate = table.Column<DateTime>(nullable: true),

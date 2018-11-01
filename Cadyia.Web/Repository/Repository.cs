@@ -26,7 +26,10 @@ namespace Cadyia.Web.Repository
         {
             return this.RepositoryContext.Set<T>().Where(expression);
         }
-
+        public T FindById(int id)
+        {
+            return this.RepositoryContext.Set<T>().Find(id);
+        }
         public void Create(T entity)
         {
             this.RepositoryContext.Set<T>().Add(entity);
