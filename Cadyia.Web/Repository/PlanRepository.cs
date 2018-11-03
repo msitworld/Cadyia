@@ -1,4 +1,4 @@
-﻿using Cadyia.Data.Entities;
+﻿using Cadyia.Web.Data.Entities;
 using Cadyia.Web.Contracts;
 using Cadyia.Web.Data;
 using System;

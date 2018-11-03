@@ -4,14 +4,16 @@ using Cadyia.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cadyia.Web.Migrations
 {
     [DbContext(typeof(CadyiaDbContext))]
-    partial class CadyiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181103063444_m3")]
+    partial class m3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,71 +21,7 @@ namespace Cadyia.Web.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Cadyia.Data.Entities.UserProfile", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasMaxLength(450);
-
-                    b.Property<int?>("AcademicDegreeId");
-
-                    b.Property<string>("Biography");
-
-                    b.Property<DateTime?>("BirthDate");
-
-                    b.Property<string>("EnAliasName");
-
-                    b.Property<int?>("FieldStudyId");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<bool?>("Gender");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("LocalAliasName");
-
-                    b.Property<string>("Location");
-
-                    b.Property<int>("ProfileView");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("UserProfiles");
-                });
-
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.Contact", b =>
-                {
-                    b.Property<int>("ContactId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContactTitle");
-
-                    b.Property<bool>("Status");
-
-                    b.HasKey("ContactId");
-
-                    b.ToTable("Contacts");
-                });
-
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.Language", b =>
-                {
-                    b.Property<int>("LanguageID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("LanguageCode");
-
-                    b.Property<string>("LanguageName");
-
-                    b.Property<bool>("Status");
-
-                    b.HasKey("LanguageID");
-
-                    b.ToTable("Language");
-                });
-
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.Plan", b =>
+            modelBuilder.Entity("Cadyia.Data.Entities.Plan", b =>
                 {
                     b.Property<int>("PlanId")
                         .ValueGeneratedOnAdd()
@@ -133,35 +71,49 @@ namespace Cadyia.Web.Migrations
                     b.ToTable("Plans");
                 });
 
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanDownload", b =>
+            modelBuilder.Entity("Cadyia.Data.Entities.UserProfile", b =>
                 {
-                    b.Property<int>("PlanId");
-
                     b.Property<string>("UserId")
                         .HasMaxLength(450);
 
-                    b.HasKey("PlanId", "UserId");
+                    b.Property<int?>("AcademicDegreeID");
 
-                    b.HasIndex("UserId");
+                    b.Property<string>("AliasName");
 
-                    b.ToTable("PlanDownloads");
+                    b.Property<string>("Biography");
+
+                    b.Property<DateTime?>("BirthDate");
+
+                    b.Property<int?>("FieldStudyID");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<bool?>("Gender");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("Location");
+
+                    b.Property<int?>("ProfileView");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserProfiles");
                 });
 
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanGlobal", b =>
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.Contact", b =>
                 {
-                    b.Property<int>("PlanId");
+                    b.Property<int>("ContactID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("LanguageId");
+                    b.Property<string>("ContactTitle");
 
-                    b.Property<string>("Description");
+                    b.Property<bool>("Status");
 
-                    b.Property<string>("Title");
+                    b.HasKey("ContactID");
 
-                    b.HasKey("PlanId", "LanguageId");
-
-                    b.HasIndex("LanguageId");
-
-                    b.ToTable("PlanGlobal");
+                    b.ToTable("Contact");
                 });
 
             modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanView", b =>
@@ -175,7 +127,7 @@ namespace Cadyia.Web.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PlanViews");
+                    b.ToTable("PlanView");
                 });
 
             modelBuilder.Entity("Cadyia.Web.Data.Entities.UserContact", b =>
@@ -189,13 +141,13 @@ namespace Cadyia.Web.Migrations
 
                     b.Property<bool>("IsVerify");
 
-                    b.Property<string>("VerifyCode");
+                    b.Property<int>("VerifyCode");
 
                     b.HasKey("ContactId", "UserId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserContacts");
+                    b.ToTable("UserContact");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -378,6 +330,13 @@ namespace Cadyia.Web.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
+            modelBuilder.Entity("Cadyia.Data.Entities.Plan", b =>
+                {
+                    b.HasOne("Cadyia.Web.Data.Entities.User", "User")
+                        .WithMany("Plans")
+                        .HasForeignKey("UserId");
+                });
+
             modelBuilder.Entity("Cadyia.Data.Entities.UserProfile", b =>
                 {
                     b.HasOne("Cadyia.Web.Data.Entities.User", "User")
@@ -386,42 +345,9 @@ namespace Cadyia.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.Plan", b =>
-                {
-                    b.HasOne("Cadyia.Web.Data.Entities.User", "User")
-                        .WithMany("Plans")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanDownload", b =>
-                {
-                    b.HasOne("Cadyia.Web.Data.Entities.Plan", "Plan")
-                        .WithMany("PlanDownloads")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Cadyia.Web.Data.Entities.User", "User")
-                        .WithMany("PlanDownloads")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanGlobal", b =>
-                {
-                    b.HasOne("Cadyia.Web.Data.Entities.Language", "Language")
-                        .WithMany()
-                        .HasForeignKey("LanguageId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Cadyia.Web.Data.Entities.Plan", "Plan")
-                        .WithMany("PlanGlobals")
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanView", b =>
                 {
-                    b.HasOne("Cadyia.Web.Data.Entities.Plan", "Plan")
+                    b.HasOne("Cadyia.Data.Entities.Plan", "Plan")
                         .WithMany("PlanViews")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade);

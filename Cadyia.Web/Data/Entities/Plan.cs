@@ -1,13 +1,25 @@
-﻿using System;
+﻿using Cadyia.Web.Data.Entities;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Cadyia.Data.Entities
+namespace Cadyia.Web.Data.Entities
 {
     public class Plan
     {
+        public Plan()
+        {
+            SubmitDate = DateTime.Now;
+            View = 0;
+            Free = true;
+            PresentOnly = false;
+            Show = true;
+        }
+
         public int PlanId { get; set; }
+        [MaxLength(450), ForeignKey("User")]
         public string UserId { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime SubmitDate { get; set; }
@@ -25,17 +37,19 @@ namespace Cadyia.Data.Entities
         public string RejectCause { get; set; }
         public bool Show { get; set; }
 
-        /*public virtual User User { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<ModelView> ModelViews { get; set; }
-        public virtual ICollection<ModelLike> ModelLikes { get; set; }
-        public virtual ICollection<ModelDownload> ModelDownloads { get; set; }
+        public virtual User User { get; set; }
+        //public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<PlanView> PlanViews { get; set; }
+        public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
+        public virtual ICollection<PlanGlobal> PlanGlobals { get; set; }
+
+        /*public virtual ICollection<ModelLike> ModelLikes { get; set; }
+        public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
         public virtual ICollection<ModelFile> ModelFiles { get; set; }
         public virtual ICollection<ModelCurrency> ModelCurrencies { get; set; }
         public virtual ICollection<ModelCategory> ModelCategories { get; set; }
         public virtual ICollection<ModelSoftware> ModelSoftwares { get; set; }
         public virtual ICollection<ModelProperty> ModelProperties { get; set; }
-        public virtual ICollection<ModelTitleDescription> ModelTitleDescriptions { get; set; }
         public virtual ICollection<ModelRate> ModelRates { get; set; }
         public virtual ICollection<ModelTag> ModelTags { get; set; }
         public virtual ICollection<ModelFileFormat> ModelFileFormats { get; set; }
