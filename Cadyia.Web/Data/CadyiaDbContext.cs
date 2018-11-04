@@ -20,16 +20,22 @@ namespace Cadyia.Web.Data
         #region DbSets
         public DbSet<AcademicDegree> AcademicDegrees { get; set; }
         public DbSet<AcademicDegreeGlobal> AcademicDegreeGlobals { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryGlobal> CategoryGlobals { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<FieldStudy> FieldStudies { get; set; }
         public DbSet<FieldStudyGlobal> FieldStudyGlobals { get; set; }
         public DbSet<Language> Languages { get; set; }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<PlanCategory> PlanCategories { get; set; }
         public DbSet<PlanDownload> PlanDownloads { get; set; }
         public DbSet<PlanLike> PlanLikes { get; set; }
         public DbSet<PlanView> PlanViews { get; set; }
+        public DbSet<Software> Softwares { get; set; }
+        public DbSet<SoftwareVersion> SoftwareVersions { get; set; }
         public DbSet<UserContact> UserContacts { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
+
         #endregion
 
         #region Configurations
@@ -43,6 +49,31 @@ namespace Cadyia.Web.Data
 
             modelBuilder.Entity<AcademicDegreeGlobal>()
                    .HasKey(c => new { c.AcademicDegreeId, c.LanguageId });
+            #endregion
+
+            #region Category
+            modelBuilder.Entity<Category>()
+                    .HasMany(c => c.Categories)
+                    .WithOne()
+                    .HasForeignKey(c => c.ParentCategoryId)
+                    .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<Category>()
+                      .HasOne(c => c.User)
+                      .WithMany(c => c.Categories)
+                      .HasForeignKey(c => c.UserId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            #endregion
+
+            #region CategoryGlobal
+            modelBuilder.Entity<CategoryGlobal>()
+                    .HasOne(c => c.Category)
+                    .WithMany(c => c.CategoryGlobals)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<CategoryGlobal>()
+                   .HasKey(c => new { c.CategoryId, c.LanguageId });
+
             #endregion
 
             #region FieldStudy
@@ -79,6 +110,12 @@ namespace Cadyia.Web.Data
                 .Property(c => c.View)
                 .ValueGeneratedOnAdd()
                 .HasDefaultValueSql("0");
+            #endregion
+
+            #region PlanCategory
+            modelBuilder.Entity<PlanCategory>()
+                   .HasKey(c => new { c.PlanId, c.CategoryId });
+
             #endregion
 
             #region PlanDownload
@@ -142,6 +179,22 @@ namespace Cadyia.Web.Data
 
             modelBuilder.Entity<PlanView>()
                    .HasKey(c => new { c.PlanId, c.UserId });
+            #endregion
+
+            #region Software
+            modelBuilder.Entity<Software>()
+                      .HasOne(c => c.User)
+                      .WithMany(c => c.Softwares)
+                      .HasForeignKey(c => c.UserId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            #endregion
+
+            #region SoftwareVersion
+            modelBuilder.Entity<SoftwareVersion>()
+                      .HasOne(c => c.User)
+                      .WithMany(c => c.SoftwareVersions)
+                      .HasForeignKey(c => c.UserId)
+                      .OnDelete(DeleteBehavior.SetNull);
             #endregion
 
             #region UserContact

@@ -4,14 +4,16 @@ using Cadyia.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cadyia.Web.Migrations
 {
     [DbContext(typeof(CadyiaDbContext))]
-    partial class CadyiaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181104192103_NewmodelAdded")]
+    partial class NewmodelAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

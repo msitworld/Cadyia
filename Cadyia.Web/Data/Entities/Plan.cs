@@ -43,11 +43,10 @@ namespace Cadyia.Web.Data.Entities
         public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
         public virtual ICollection<PlanGlobal> PlanGlobals { get; set; }
         public virtual ICollection<PlanLike> PlanLikes { get; set; }
-        /*public virtual ICollection<ModelLike> ModelLikes { get; set; }
-        public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
-        public virtual ICollection<ModelFile> ModelFiles { get; set; }
+        public virtual ICollection<PlanCategory> PlanCategories { get; set; }
+
+        /*public virtual ICollection<ModelFile> ModelFiles { get; set; }
         public virtual ICollection<ModelCurrency> ModelCurrencies { get; set; }
-        public virtual ICollection<ModelCategory> ModelCategories { get; set; }
         public virtual ICollection<ModelSoftware> ModelSoftwares { get; set; }
         public virtual ICollection<ModelProperty> ModelProperties { get; set; }
         public virtual ICollection<ModelRate> ModelRates { get; set; }

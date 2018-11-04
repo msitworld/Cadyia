@@ -14,6 +14,9 @@ namespace Cadyia.Web.Data.Entities
         public virtual ICollection<PlanView> PlanViews { get; set; }
         public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
         public virtual ICollection<PlanLike> PlanLikes { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<Software> Softwares { get; set; }
+        public virtual ICollection<SoftwareVersion> SoftwareVersions { get; set; }
 
         public virtual UserProfile UserProfile { get; set; }
         /*public virtual ICollection<Comment> Comments { get; set; }
