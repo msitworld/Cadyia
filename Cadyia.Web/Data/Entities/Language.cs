@@ -7,7 +7,7 @@ namespace Cadyia.Web.Data.Entities
 {
     public class Language
     {
-        public int LanguageID { get; set; }
+        public int LanguageId { get; set; }
         public string LanguageCode { get; set; }
         public string LanguageName { get; set; }
         public bool Status { get; set; }

@@ -48,7 +48,39 @@ namespace Cadyia.Web.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("AcademicDegreeId");
+
+                    b.HasIndex("FieldStudyId");
+
                     b.ToTable("UserProfiles");
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.AcademicDegree", b =>
+                {
+                    b.Property<int>("AcademicDegreeId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AcademicDegreeTitle");
+
+                    b.HasKey("AcademicDegreeId");
+
+                    b.ToTable("AcademicDegrees");
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.AcademicDegreeGlobal", b =>
+                {
+                    b.Property<int>("AcademicDegreeId");
+
+                    b.Property<int>("LanguageId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("AcademicDegreeId", "LanguageId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("AcademicDegreeGlobals");
                 });
 
             modelBuilder.Entity("Cadyia.Web.Data.Entities.Contact", b =>
@@ -66,9 +98,43 @@ namespace Cadyia.Web.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.FieldStudy", b =>
+                {
+                    b.Property<int>("FieldStudyId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("FieldStudyId1");
+
+                    b.Property<string>("FieldStudyTitle");
+
+                    b.Property<int?>("ParentFieldStudyId");
+
+                    b.HasKey("FieldStudyId");
+
+                    b.HasIndex("FieldStudyId1");
+
+                    b.ToTable("FieldStudies");
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.FieldStudyGlobal", b =>
+                {
+                    b.Property<int>("FieldStudyId");
+
+                    b.Property<int>("LanguageId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("FieldStudyId", "LanguageId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("FieldStudyGlobals");
+                });
+
             modelBuilder.Entity("Cadyia.Web.Data.Entities.Language", b =>
                 {
-                    b.Property<int>("LanguageID")
+                    b.Property<int>("LanguageId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -78,9 +144,9 @@ namespace Cadyia.Web.Migrations
 
                     b.Property<bool>("Status");
 
-                    b.HasKey("LanguageID");
+                    b.HasKey("LanguageId");
 
-                    b.ToTable("Language");
+                    b.ToTable("Languages");
                 });
 
             modelBuilder.Entity("Cadyia.Web.Data.Entities.Plan", b =>
@@ -162,6 +228,20 @@ namespace Cadyia.Web.Migrations
                     b.HasIndex("LanguageId");
 
                     b.ToTable("PlanGlobal");
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanLike", b =>
+                {
+                    b.Property<int>("PlanId");
+
+                    b.Property<string>("UserId")
+                        .HasMaxLength(450);
+
+                    b.HasKey("PlanId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PlanLikes");
                 });
 
             modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanView", b =>
@@ -380,9 +460,50 @@ namespace Cadyia.Web.Migrations
 
             modelBuilder.Entity("Cadyia.Data.Entities.UserProfile", b =>
                 {
+                    b.HasOne("Cadyia.Web.Data.Entities.AcademicDegree", "AcademicDegree")
+                        .WithMany()
+                        .HasForeignKey("AcademicDegreeId");
+
+                    b.HasOne("Cadyia.Web.Data.Entities.FieldStudy", "FieldStudy")
+                        .WithMany()
+                        .HasForeignKey("FieldStudyId");
+
                     b.HasOne("Cadyia.Web.Data.Entities.User", "User")
                         .WithOne("UserProfile")
                         .HasForeignKey("Cadyia.Data.Entities.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.AcademicDegreeGlobal", b =>
+                {
+                    b.HasOne("Cadyia.Web.Data.Entities.AcademicDegree", "AcademicDegree")
+                        .WithMany("AcademicDegreeGlobals")
+                        .HasForeignKey("AcademicDegreeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Cadyia.Web.Data.Entities.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.FieldStudy", b =>
+                {
+                    b.HasOne("Cadyia.Web.Data.Entities.FieldStudy")
+                        .WithMany("FieldStudies")
+                        .HasForeignKey("FieldStudyId1");
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.FieldStudyGlobal", b =>
+                {
+                    b.HasOne("Cadyia.Web.Data.Entities.FieldStudy", "FieldStudy")
+                        .WithMany("FieldStudyGlobals")
+                        .HasForeignKey("FieldStudyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Cadyia.Web.Data.Entities.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -416,6 +537,19 @@ namespace Cadyia.Web.Migrations
                     b.HasOne("Cadyia.Web.Data.Entities.Plan", "Plan")
                         .WithMany("PlanGlobals")
                         .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Cadyia.Web.Data.Entities.PlanLike", b =>
+                {
+                    b.HasOne("Cadyia.Web.Data.Entities.Plan", "Plan")
+                        .WithMany("PlanLikes")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Cadyia.Web.Data.Entities.User", "User")
+                        .WithMany("PlanLikes")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

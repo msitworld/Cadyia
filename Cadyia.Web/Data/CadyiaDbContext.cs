@@ -18,21 +18,50 @@ namespace Cadyia.Web.Data
         #endregion
 
         #region DbSets
+        public DbSet<AcademicDegree> AcademicDegrees { get; set; }
+        public DbSet<AcademicDegreeGlobal> AcademicDegreeGlobals { get; set; }
         public DbSet<Contact> Contacts { get; set; }
+        public DbSet<FieldStudy> FieldStudies { get; set; }
+        public DbSet<FieldStudyGlobal> FieldStudyGlobals { get; set; }
+        public DbSet<Language> Languages { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<PlanDownload> PlanDownloads { get; set; }
+        public DbSet<PlanLike> PlanLikes { get; set; }
         public DbSet<PlanView> PlanViews { get; set; }
         public DbSet<UserContact> UserContacts { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
-
-
         #endregion
 
         #region Configurations
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region Language
+            #region AcademicDegreeGlobal
+            modelBuilder.Entity<AcademicDegreeGlobal>()
+                    .HasOne(c => c.AcademicDegree)
+                    .WithMany(c => c.AcademicDegreeGlobals)
+                    .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<AcademicDegreeGlobal>()
+                   .HasKey(c => new { c.AcademicDegreeId, c.LanguageId });
+            #endregion
+
+            #region FieldStudy
+            /*modelBuilder.Entity<FieldStudy>()
+                    .HasOne(c => c.FieldStudies)
+                    .WithMany()
+                    .HasForeignKey(c => c.ParentFieldStudyId)
+                    .OnDelete(DeleteBehavior.SetNull);*/
+            #endregion
+
+            #region FieldStudyGlobal
+            modelBuilder.Entity<FieldStudyGlobal>()
+                    .HasOne(c => c.FieldStudy)
+                    .WithMany(c => c.FieldStudyGlobals)
+                    .HasForeignKey(c => c.FieldStudyId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FieldStudyGlobal>()
+                   .HasKey(c => new { c.FieldStudyId, c.LanguageId });
             #endregion
 
             #region Plan
@@ -79,6 +108,23 @@ namespace Cadyia.Web.Data
             modelBuilder.Entity<PlanGlobal>()
                    .HasKey(c => new { c.PlanId, c.LanguageId });
 
+            #endregion
+
+            #region PlanLike
+            modelBuilder.Entity<PlanLike>()
+                   .HasOne(c => c.User)
+                   .WithMany(c => c.PlanLikes)
+                   .HasForeignKey(c => c.UserId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PlanLike>()
+                   .HasOne(c => c.Plan)
+                   .WithMany(c => c.PlanLikes)
+                   .HasForeignKey(c => c.PlanId)
+                   .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PlanLike>()
+                   .HasKey(c => new { c.PlanId, c.UserId });
             #endregion
 
             #region PlanView

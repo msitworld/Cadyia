@@ -13,6 +13,7 @@ namespace Cadyia.Web.Data.Entities
         public virtual ICollection<UserContact> UserContacts { get; set; }
         public virtual ICollection<PlanView> PlanViews { get; set; }
         public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
+        public virtual ICollection<PlanLike> PlanLikes { get; set; }
 
         public virtual UserProfile UserProfile { get; set; }
         /*public virtual ICollection<Comment> Comments { get; set; }

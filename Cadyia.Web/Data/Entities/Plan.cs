@@ -42,7 +42,7 @@ namespace Cadyia.Web.Data.Entities
         public virtual ICollection<PlanView> PlanViews { get; set; }
         public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
         public virtual ICollection<PlanGlobal> PlanGlobals { get; set; }
-
+        public virtual ICollection<PlanLike> PlanLikes { get; set; }
         /*public virtual ICollection<ModelLike> ModelLikes { get; set; }
         public virtual ICollection<PlanDownload> PlanDownloads { get; set; }
         public virtual ICollection<ModelFile> ModelFiles { get; set; }
